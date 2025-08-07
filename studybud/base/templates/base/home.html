@@ -1,8 +1,6 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% block content %}
 
-{% block content %}
-
-<style>
+<!-- <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f4f4f4;
@@ -38,6 +36,9 @@
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        
     }
 
     .create-link {
@@ -107,26 +108,54 @@
     .room-buttons a.delete:hover {
         background-color: #c82333;
     }
+    .browse-container{
+        color: #121212;
+    }
+</style> -->
+<style>
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
 </style>
 
 <div class="container">
-    <h1>Home Template</h1>
+  <div class="browse-container">
+    <h3>Browse Topics</h3>
+    <br />
+    <div>
+      <a href="{% url 'home' %}?q={{topic.name}}">All</a>
+    </div>
+    {% for topic in topics %}
+    <div>
+      <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+    </div>
+    {% endfor %}
+    <br />
+  </div>
 
+  <div>
+
+    <h5>{{rooms_count}} rooms available</h5>
     <a class="create-link" href="{% url 'create-room' %}">Create Room</a>
 
     <div>
-        {% for room in rooms %}
-            <div class="room">
-                <div class="room-buttons">
-                    <a href="{% url 'update-room' room.id %}">Edit</a>
-                    <a href="{% url 'delete-room' room.id %}" class="delete">Delete</a>
-                </div>
-                <span>@{{ room.host.username }}</span>
-                <h5>{{ room.id }} -- <a href="{% url 'room' room.id %}">{{ room.name }}</a></h5>
-                <small>{{room.topic.name}}</small>
-            </div>
-        {% endfor %}
+      {% for room in rooms %}
+      <div class="room">
+        <div class="room-buttons">
+          <a href="{% url 'update-room' room.id %}">Edit</a>
+          <a href="{% url 'delete-room' room.id %}" class="delete">Delete</a>
+        </div>
+        <span>@{{ room.host.username }}</span>
+        <h5>
+          {{ room.id }} --
+          <a href="{% url 'room' room.id %}">{{ room.name }}</a>
+        </h5>
+        <small>{{room.topic.name}}</small>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
 
 {% endblock %}
