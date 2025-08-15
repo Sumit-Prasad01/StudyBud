@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +9,7 @@
     <title>StudyBud</title>
 
     <!-- 🔽 Add your CSS here -->
-    <style></style>
+    <link rel="stylesheet" type="text/css" media = 'screen' href="{% static 'styles/main.css' %}">
   </head>
 
   <body>
@@ -16,6 +19,7 @@
       <li>{{ message }}</li>
       {% endfor %}
     </ul>
-    {% endif %} {% block content %} {% endblock %}
+    {% endif %} 
+    {% block content %} {% endblock %}
   </body>
 </html>
