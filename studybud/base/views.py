@@ -6,8 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from .models import Room, Topic, Message
-from .forms import RoomForm
-from .forms import MessageForm
+from .forms import RoomForm, MessageForm, UserForm
 from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
@@ -185,3 +184,17 @@ def update_message(request, pk):
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/message_form.html', context)
+
+@login_required(login_url='/login')
+def update_user(request):
+    user = request.user
+    form = UserForm(instance = user)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance = user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk = user.id)
+
+    context = {'form' : form}
+    return render(request, 'base/update-user.html', context)
