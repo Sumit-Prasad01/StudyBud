@@ -21,4 +21,8 @@ urlpatterns = [
 
     path("update-user/", views.update_user, name= 'update-user'),
 
+    path("topics/", views.topics_page, name= 'topics'),
+
+    path("activity/", views.acticity_page, name= 'activity'),
+
 ]
